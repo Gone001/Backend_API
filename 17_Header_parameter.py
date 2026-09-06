@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import FastAPI, Header
+from pydantic important BaseModel 
 
 app = FastAPI()
 
@@ -14,3 +15,16 @@ async def profile(
     authorization: Annotated[str | None, Header()] = None
 ):
     return {"authorization": authorization}
+
+#Header using Basemodel class 
+
+class CommonHeaders(BaseModel):
+    host: str
+    save_data: bool
+    if_modified_since: str | None = None
+    traceparent: str | None = None
+    x_tag: list[str] = []
+    
+@app.get("/item/")
+async def read_items(headers: Annotated[CommonHeaders, Header()]):
+    return headers
